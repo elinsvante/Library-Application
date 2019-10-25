@@ -77,6 +77,7 @@ namespace Library
             dropDown_members.Items.Clear();
             FillDropDownMembers(memberService.All());
             FillDropDownAuthors(authorService.All());
+            dropDown_members.SelectedIndex = -1;
         }
 
 
@@ -91,10 +92,10 @@ namespace Library
 
         private void ShowAllBookCopies(IEnumerable<BookCopy> bookCopies)
         {
-            lbCopies.Items.Clear();
+            lbAvailableCopies.Items.Clear();
             foreach (BookCopy bookCopy in bookCopies)
             {
-                lbCopies.Items.Add(bookCopy);
+                lbAvailableCopies.Items.Add(bookCopy);
             }
         }
 
@@ -139,7 +140,6 @@ namespace Library
 
         private void ShowAllAvailableCopiesForBook(IEnumerable<BookCopy> bookCopiesNotOnLoan)
         {
-
             lbAvailableCopies.Items.Clear();
             lbCopies.Items.Clear();
             foreach (BookCopy bookCopy in bookCopiesNotOnLoan)
@@ -174,34 +174,46 @@ namespace Library
 
         private void dropDown_filterCopies_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selectedValue = dropDown_filterCopies.SelectedItem.ToString();
+            //string selectedValue = dropDown_filterCopies.SelectedItem.ToString();
+            //if (selectedValue == "All Copies")
+            //{
+            //    Book selectedBook = lbBooks.SelectedItem as Book;
+            //    if (selectedBook != null)
+            //    {
+            //        ShowAllBookCopies(bookCopyService.AllBookCopiesForBook(selectedBook));
+            //    }
+            //    else
+            //    {
+            //        ShowAllBookCopies(bookCopyService.All());
+            //    }
+            //}
+            //else if (selectedValue == "Available Copies")
+            //{
+            //    Book selectedBook = lbBooks.SelectedItem as Book;
+            //    if (selectedBook != null)
+            //    {
+            //        IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
+            //        IEnumerable<BookCopy> bookCopiesNotOnLoanForBook = bookCopyService.AllExceptWithBook(allCurrentLoans, selectedBook);
+            //        ShowAllAvailableCopies(bookCopiesNotOnLoanForBook);
+            //    }
+            //    else
+            //    {
+            //        IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
+            //        IEnumerable<BookCopy> bookCopiesNotOnLoan = bookCopyService.AllExcept(allCurrentLoans);
+            //        ShowAllAvailableCopies(bookCopiesNotOnLoan);
+            //    }
+            //}
+
+           string selectedValue = dropDown_filterCopies.SelectedItem.ToString();
             if (selectedValue == "All Copies")
             {
-                Book selectedBook = lbBooks.SelectedItem as Book;
-                if (selectedBook != null)
-                {
-                    ShowAllBookCopies(bookCopyService.AllBookCopiesForBook(selectedBook));
-                }
-                else
-                {
-                    ShowAllBookCopies(bookCopyService.All());
-                }
+                ShowAllBookCopies(bookCopyService.All());
             }
-            else if (selectedValue == "Available Copies")
+            else if(selectedValue == "Available Copies")
             {
-                Book selectedBook = lbBooks.SelectedItem as Book;
-                if (selectedBook != null)
-                {
-                    IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
-                    IEnumerable<BookCopy> bookCopiesNotOnLoanForBook = bookCopyService.AllExceptWithBook(allCurrentLoans, selectedBook);
-                    ShowAllAvailableCopies(bookCopiesNotOnLoanForBook);
-                }
-                else
-                {
-                    IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
-                    IEnumerable<BookCopy> bookCopiesNotOnLoan = bookCopyService.AllExcept(allCurrentLoans);
-                    ShowAllAvailableCopies(bookCopiesNotOnLoan);
-                }
+                IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
+                IEnumerable<BookCopy> bookCopiesNotOnLoan = bookCopyService.AllExcept(allCurrentLoans);
+                ShowAllAvailableCopies(bookCopiesNotOnLoan);
             }
         }
 
@@ -215,10 +227,21 @@ namespace Library
         {
             BookCopy selectedBookCopy = lbAvailableCopies.SelectedItem as BookCopy;
             Member selectedMember = dropDown_members.SelectedItem as Member;
-            DateTime timeOfLoan = DateTime.Now;
-            DateTime dueDate = timeOfLoan.AddDays(15);
-            Loan newLoan = new Loan(timeOfLoan, dueDate, selectedBookCopy, selectedMember);
-            loanService.Add(newLoan);
+            if (selectedBookCopy == null)
+            {
+                MessageBox.Show("You have to choose a Book copy to loan.");
+            }
+            else if (selectedMember == null)
+            {
+                MessageBox.Show("You have to choose a Member to make the loan.");
+            }
+            else
+            {
+                DateTime timeOfLoan = DateTime.Now;
+                DateTime dueDate = timeOfLoan.AddDays(15);
+                Loan newLoan = new Loan(timeOfLoan, dueDate, selectedBookCopy, selectedMember);
+                loanService.Add(newLoan);
+            }          
         }
 
         private void BTNReturn_Click(object sender, EventArgs e)
@@ -278,25 +301,30 @@ namespace Library
 
         private void BTNLoansForMember_Click(object sender, EventArgs e)
         {
-            lbCurrentLoans.Items.Clear();
-            Member member = dropDown_members.SelectedItem as Member;
-            IEnumerable<Loan> loansForMember = loanService.AllLoanForMember(member);
-            MembersForm newForm = new MembersForm(loansForMember);
-            newForm.FormClosing += new FormClosingEventHandler(UpdateForm);
-            newForm.Show();
-
+            Member selectedMember = dropDown_members.SelectedItem as Member;
+            if (selectedMember == null)
+            {
+                MessageBox.Show("You have to select a member.");
+            }
+            else
+            {
+                string textMember = dropDown_members.SelectedItem.ToString();
+                IEnumerable<Loan> loansForMember = loanService.AllLoanForMember(selectedMember);
+                MembersLoanForm newForm = new MembersLoanForm(loansForMember, textMember);
+                newForm.FormClosing += new FormClosingEventHandler(UpdateForm);
+                newForm.Show();
+                dropDown_members.SelectedIndex = -1;
+            }          
         }
 
-
-
-        private void BTNChangeBook_Click(object sender, EventArgs e)
+        private void label2_Click(object sender, EventArgs e)
         {
-            Book b = lbBooks.SelectedItem as Book;
-            if (b != null)
-            {
-                b.Title = "Yoyoma koko";
-                bookService.Edit(b);
-            }
+            this.Close();
+        }
+
+        private void LibraryForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

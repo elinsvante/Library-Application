@@ -82,9 +82,9 @@ namespace Library
 
             IEnumerable<BookCopy> allAllBookCopiesOnLoan = bookCopyService.AllBookCopiesOnLoanForMember(loansForMember);
 
-                foreach (BookCopy copy in allAllBookCopiesOnLoan)
+                foreach (Loan loan in loansForMember)
                 {
-                    lbMembersLoan.Items.Add(copy.Book.Title);
+                    lbMembersLoan.Items.Add(loan);
                 }
         }
     }

@@ -32,6 +32,7 @@ namespace Library.Models {
 
             Book monteCristo = new Book() {
                 Title = "The Count of Monte Cristo",
+                ISBN = "92872819",
                 Author = author1,
             };
 
@@ -43,6 +44,7 @@ namespace Library.Models {
             Book csharp = new Book()
             {
                 Title = "C# Essentials",
+                ISBN = "928738919",
                 Author = author1,
             };
 
