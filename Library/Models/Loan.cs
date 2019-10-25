@@ -30,7 +30,7 @@ namespace Library.Models
         /// </summary>
         public override string ToString()
         {
-            return String.Format("[{0}] -- {1}", this.LoanID, this.BookCopy.Book.Title);
+            return String.Format("[{0}] -- {1}", this.LoanID, this.BookCopy);
         }
     }
 }

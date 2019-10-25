@@ -67,11 +67,13 @@ namespace Library.Models {
                 Book = monteCristo
             };
 
+
             BookCopy bookcopy4 = new BookCopy()
             {
                 Condition = 8,
                 Book = csharp
             };
+
 
             context.BookCopies.Add(bookcopy1);
             context.SaveChanges();

@@ -56,7 +56,7 @@ namespace Library
         {
             ShowAllBooks(bookService.All());
             ShowAllBookCopies(bookCopyService.All());
-            ShowAllCurrentLoans(loanService.AllBookCopiesOnLoan()); 
+            ShowAllCurrentLoans(loanService.AllBookCopiesOnLoan());
             ShowAllReturnedLoans(loanService.AllBookCopiesNotOnLoan());
             IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
             IEnumerable<BookCopy> bookCopiesNotOnLoan = bookCopyService.AllExcept(allCurrentLoans);
@@ -112,7 +112,7 @@ namespace Library
                 else
                 {
                     lbCurrentLoans.Items.Add(loan);
-                }              
+                }
             }
         }
 
@@ -147,11 +147,11 @@ namespace Library
                 lbAvailableCopies.Items.Add(bookCopy);
                 lbCopies.Items.Add(bookCopy);
             }
-        }     
+        }
 
         private void FillDropDownMembers(IEnumerable<Member> allMembers)
         {
-            foreach(Member member in allMembers)
+            foreach (Member member in allMembers)
             {
                 dropDown_members.Items.Add(member);
             }
@@ -185,23 +185,23 @@ namespace Library
                 else
                 {
                     ShowAllBookCopies(bookCopyService.All());
-                }           
+                }
             }
-            else if(selectedValue == "Available Copies")
+            else if (selectedValue == "Available Copies")
             {
                 Book selectedBook = lbBooks.SelectedItem as Book;
                 if (selectedBook != null)
                 {
                     IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
                     IEnumerable<BookCopy> bookCopiesNotOnLoanForBook = bookCopyService.AllExceptWithBook(allCurrentLoans, selectedBook);
-                    ShowAllAvailableCopies(bookCopiesNotOnLoanForBook);              
+                    ShowAllAvailableCopies(bookCopiesNotOnLoanForBook);
                 }
                 else
                 {
                     IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
                     IEnumerable<BookCopy> bookCopiesNotOnLoan = bookCopyService.AllExcept(allCurrentLoans);
                     ShowAllAvailableCopies(bookCopiesNotOnLoan);
-                }           
+                }
             }
         }
 
@@ -245,7 +245,7 @@ namespace Library
             {
                 MessageBox.Show("You have to choose a loan to return!");
             }
-            
+
         }
 
         private void BTNAddBook_Click(object sender, EventArgs e)
@@ -287,7 +287,7 @@ namespace Library
 
         }
 
-       
+
 
         private void BTNChangeBook_Click(object sender, EventArgs e)
         {
