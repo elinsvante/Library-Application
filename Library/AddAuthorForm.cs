@@ -32,9 +32,16 @@ namespace Library
         private void BTNAddAuthor_Click(object sender, EventArgs e)
         {
             string name = tbName.Text;
-            Author newAuthor = new Author(name);
-            authorService.Add(newAuthor);
-            this.Close();
+            if(string.IsNullOrWhiteSpace(tbName.Text))
+            {
+                MessageBox.Show("Please enter name of the author.");
+            }
+            else
+            {
+                Author newAuthor = new Author(name);
+                authorService.Add(newAuthor);
+                this.Close();
+            } 
         }
     }
 }

@@ -37,12 +37,34 @@ namespace Library.Services
 
         public IEnumerable<Loan> AllLoanForMember(Member member)
         {
-            return loanRepository.All().Where(m => m.Member == member);
+            IEnumerable<Loan> loanForMember = loanRepository.All().Where(m => m.Member == member);
+            return loanForMember.Where(l => l.TimeOfReturn == null).ToList();
         }
 
         public IEnumerable<Loan> AllBookCopiesOnLoan()
         {
             return loanRepository.All().Where(l => l.TimeOfReturn == null).ToList();
+        }
+
+        public IEnumerable<Loan> AllBookCopiesOverdue()
+        {
+            DateTime timeNow = DateTime.Today;
+            IEnumerable<Loan> overdueLoans = loanRepository.All().Where(l => l.DueDate < timeNow);
+            return overdueLoans.Where(t => t.TimeOfReturn == null).ToList();
+        }
+
+        public IEnumerable<Loan> AllBookCopiesOverdueForMember(Member member)
+        {
+            DateTime timeNow = DateTime.Today;
+            IEnumerable<Loan> overdueLoans = loanRepository.All().Where(l => l.DueDate < timeNow);
+            IEnumerable<Loan> currentLoans = overdueLoans.Where(t => t.TimeOfReturn == null).ToList();
+            return currentLoans.Where(m => m.Member == member);
+        }
+
+        public IEnumerable<Loan> AllReturnedLoanForMember(Member member)
+        {
+            IEnumerable<Loan> loanForMember = loanRepository.All().Where(m => m.Member == member);
+            return loanForMember.Where(l => l.TimeOfReturn != null).ToList();
         }
 
         public IEnumerable<Loan> AllBookCopiesNotOnLoan()

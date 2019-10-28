@@ -90,7 +90,7 @@ namespace Library.Models {
             {
                 Name = "Diyar Faraj",
                 PersonalIdentityNumber = "8912268877",
-                MembershipDate = DateTime.Today
+                MembershipDate = DateTime.Now.AddDays(-12).Date
             };
 
             context.Members.Add(member1);
@@ -100,7 +100,7 @@ namespace Library.Models {
             {
                 Name = "Lisa Svantesson",
                 PersonalIdentityNumber = "9804240028",
-                MembershipDate = DateTime.Today
+                MembershipDate = DateTime.Now.AddDays(-150).Date
             };
 
             context.Members.Add(member2);

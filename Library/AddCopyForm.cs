@@ -32,14 +32,14 @@ namespace Library
             this.bookService = new BookService(repFactory);
             this.bookCopyService = new BookCopyService(repFactory);
 
-            FillDropDownBooks(bookService.All());
+            FillDropDownBooks(bookService.All().OrderBy(b => b.Title));
         }
 
         private void FillDropDownBooks(IEnumerable<Book> allBooks)
         {
             foreach (Book book in allBooks)
             {
-                dropDown_books.Items.Add(book);
+                dropDown_books.Items.Add(book.Title);
             }
         }
 

@@ -37,6 +37,7 @@
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.dropDown_filterLoans = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.BTNReturnBook = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,7 +46,7 @@
             this.lbMemberLoan.FormattingEnabled = true;
             this.lbMemberLoan.Location = new System.Drawing.Point(12, 156);
             this.lbMemberLoan.Name = "lbMemberLoan";
-            this.lbMemberLoan.Size = new System.Drawing.Size(398, 342);
+            this.lbMemberLoan.Size = new System.Drawing.Size(398, 303);
             this.lbMemberLoan.TabIndex = 0;
             // 
             // tbMember
@@ -127,12 +128,23 @@
             this.panel1.Size = new System.Drawing.Size(425, 109);
             this.panel1.TabIndex = 8;
             // 
+            // BTNReturnBook
+            // 
+            this.BTNReturnBook.Location = new System.Drawing.Point(12, 465);
+            this.BTNReturnBook.Name = "BTNReturnBook";
+            this.BTNReturnBook.Size = new System.Drawing.Size(398, 44);
+            this.BTNReturnBook.TabIndex = 9;
+            this.BTNReturnBook.Text = "Return Book";
+            this.BTNReturnBook.UseVisualStyleBackColor = true;
+            this.BTNReturnBook.Click += new System.EventHandler(this.BTNReturnBook_Click);
+            // 
             // MembersLoanForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(237)))), ((int)(((byte)(222)))), ((int)(((byte)(194)))));
             this.ClientSize = new System.Drawing.Size(425, 521);
+            this.Controls.Add(this.BTNReturnBook);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dropDown_filterLoans);
             this.Controls.Add(this.label3);
@@ -160,5 +172,6 @@
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.ComboBox dropDown_filterLoans;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button BTNReturnBook;
     }
 }

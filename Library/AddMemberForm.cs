@@ -31,12 +31,23 @@ namespace Library
 
         private void BTNAddMember_Click(object sender, EventArgs e)
         {
-            string name = tbName.Text;
-            string personalNumber = tbPersonalNumber.Text;
-            DateTime dateTimeNow = DateTime.Today;
-            Member newMember = new Member(name, personalNumber, dateTimeNow);
-            memberService.Add(newMember);
-            this.Close();
+            if (string.IsNullOrWhiteSpace(tbName.Text))
+            {
+                MessageBox.Show("Please enter the new members name.");
+            }
+            else if (string.IsNullOrWhiteSpace(tbPersonalNumber.Text))
+            {
+                MessageBox.Show("Please enter the members personal identification number.");
+            }
+            else
+            {
+                string name = tbName.Text;
+                string personalNumber = tbPersonalNumber.Text;
+                DateTime dateTimeToday = DateTime.Today.Date;
+                Member newMember = new Member(name, personalNumber, dateTimeToday);
+                memberService.Add(newMember);
+                this.Close();
+            }
         }
     }
 }

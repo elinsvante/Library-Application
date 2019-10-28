@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             this.lbBooks = new System.Windows.Forms.ListBox();
             this.lbCopies = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -32,14 +33,13 @@
             this.BTNAddAuthor = new System.Windows.Forms.Button();
             this.BTNBooksOfAuthor = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.BTNReturn = new System.Windows.Forms.Button();
             this.lbReturnedLoans = new System.Windows.Forms.ListBox();
             this.lbCurrentLoans = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.dropDown_members = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.BTNLoan = new System.Windows.Forms.Button();
             this.BTNMembers = new System.Windows.Forms.Button();
             this.lbAvailableCopies = new System.Windows.Forms.ListBox();
@@ -47,26 +47,32 @@
             this.dropDown_filterCopies = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label_ShowAll = new System.Windows.Forms.Label();
             this.dropDown_filterLoans = new System.Windows.Forms.ComboBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.dropDown_filterBooks = new System.Windows.Forms.ComboBox();
+            this.label_ShowAllBooks = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbBooks
             // 
+            this.lbBooks.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbBooks.FormattingEnabled = true;
-            this.lbBooks.Location = new System.Drawing.Point(24, 120);
+            this.lbBooks.ItemHeight = 16;
+            this.lbBooks.Location = new System.Drawing.Point(24, 139);
             this.lbBooks.Name = "lbBooks";
-            this.lbBooks.Size = new System.Drawing.Size(566, 459);
+            this.lbBooks.Size = new System.Drawing.Size(566, 212);
             this.lbBooks.TabIndex = 0;
             this.lbBooks.SelectedIndexChanged += new System.EventHandler(this.lbBooks_SelectedIndexChanged);
             // 
             // lbCopies
             // 
             this.lbCopies.FormattingEnabled = true;
-            this.lbCopies.Location = new System.Drawing.Point(137, 155);
+            this.lbCopies.Location = new System.Drawing.Point(24, 357);
             this.lbCopies.Name = "lbCopies";
-            this.lbCopies.Size = new System.Drawing.Size(305, 251);
+            this.lbCopies.Size = new System.Drawing.Size(566, 212);
             this.lbCopies.TabIndex = 2;
             // 
             // label1
@@ -84,10 +90,10 @@
             // BTNAddBook
             // 
             this.BTNAddBook.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTNAddBook.Location = new System.Drawing.Point(56, 599);
-            this.BTNAddBook.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BTNAddBook.Location = new System.Drawing.Point(48, 599);
+            this.BTNAddBook.Margin = new System.Windows.Forms.Padding(2);
             this.BTNAddBook.Name = "BTNAddBook";
-            this.BTNAddBook.Size = new System.Drawing.Size(273, 49);
+            this.BTNAddBook.Size = new System.Drawing.Size(273, 36);
             this.BTNAddBook.TabIndex = 12;
             this.BTNAddBook.Text = "Add Book";
             this.BTNAddBook.UseVisualStyleBackColor = true;
@@ -95,20 +101,21 @@
             // 
             // dropDown_authors
             // 
+            this.dropDown_authors.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dropDown_authors.FormattingEnabled = true;
-            this.dropDown_authors.Location = new System.Drawing.Point(373, 599);
-            this.dropDown_authors.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dropDown_authors.Location = new System.Drawing.Point(373, 596);
+            this.dropDown_authors.Margin = new System.Windows.Forms.Padding(2);
             this.dropDown_authors.Name = "dropDown_authors";
-            this.dropDown_authors.Size = new System.Drawing.Size(180, 21);
+            this.dropDown_authors.Size = new System.Drawing.Size(180, 24);
             this.dropDown_authors.TabIndex = 13;
             // 
             // BTNAddCopy
             // 
             this.BTNAddCopy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTNAddCopy.Location = new System.Drawing.Point(56, 652);
-            this.BTNAddCopy.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BTNAddCopy.Location = new System.Drawing.Point(48, 639);
+            this.BTNAddCopy.Margin = new System.Windows.Forms.Padding(2);
             this.BTNAddCopy.Name = "BTNAddCopy";
-            this.BTNAddCopy.Size = new System.Drawing.Size(273, 49);
+            this.BTNAddCopy.Size = new System.Drawing.Size(273, 36);
             this.BTNAddCopy.TabIndex = 14;
             this.BTNAddCopy.Text = "Add BookCopy";
             this.BTNAddCopy.UseVisualStyleBackColor = true;
@@ -118,7 +125,7 @@
             // 
             this.BTNAddAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTNAddAuthor.Location = new System.Drawing.Point(373, 663);
-            this.BTNAddAuthor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BTNAddAuthor.Margin = new System.Windows.Forms.Padding(2);
             this.BTNAddAuthor.Name = "BTNAddAuthor";
             this.BTNAddAuthor.Size = new System.Drawing.Size(180, 38);
             this.BTNAddAuthor.TabIndex = 19;
@@ -130,7 +137,7 @@
             // 
             this.BTNBooksOfAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTNBooksOfAuthor.Location = new System.Drawing.Point(373, 624);
-            this.BTNBooksOfAuthor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BTNBooksOfAuthor.Margin = new System.Windows.Forms.Padding(2);
             this.BTNBooksOfAuthor.Name = "BTNBooksOfAuthor";
             this.BTNBooksOfAuthor.Size = new System.Drawing.Size(180, 35);
             this.BTNBooksOfAuthor.TabIndex = 20;
@@ -146,10 +153,22 @@
             this.panel2.Controls.Add(this.label2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1234, 94);
             this.panel2.TabIndex = 25;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(113)))), ((int)(((byte)(116)))));
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label6.Location = new System.Drawing.Point(1140, 2);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(23, 31);
+            this.label6.TabIndex = 25;
+            this.label6.Text = "-";
             // 
             // label2
             // 
@@ -164,26 +183,14 @@
             this.label2.Text = "X";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(113)))), ((int)(((byte)(116)))));
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label6.Location = new System.Drawing.Point(1140, 2);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(23, 31);
-            this.label6.TabIndex = 25;
-            this.label6.Text = "-";
-            // 
             // BTNReturn
             // 
-            this.BTNReturn.Location = new System.Drawing.Point(34, 650);
-            this.BTNReturn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BTNReturn.Location = new System.Drawing.Point(34, 639);
+            this.BTNReturn.Margin = new System.Windows.Forms.Padding(2);
             this.BTNReturn.Name = "BTNReturn";
-            this.BTNReturn.Size = new System.Drawing.Size(250, 35);
+            this.BTNReturn.Size = new System.Drawing.Size(359, 46);
             this.BTNReturn.TabIndex = 7;
-            this.BTNReturn.Text = "Return";
+            this.BTNReturn.Text = "Return Book";
             this.BTNReturn.UseVisualStyleBackColor = true;
             this.BTNReturn.Click += new System.EventHandler(this.BTNReturn_Click);
             // 
@@ -202,7 +209,7 @@
             this.lbCurrentLoans.ItemHeight = 16;
             this.lbCurrentLoans.Location = new System.Drawing.Point(34, 466);
             this.lbCurrentLoans.Name = "lbCurrentLoans";
-            this.lbCurrentLoans.Size = new System.Drawing.Size(250, 164);
+            this.lbCurrentLoans.Size = new System.Drawing.Size(507, 164);
             this.lbCurrentLoans.TabIndex = 11;
             // 
             // label4
@@ -213,35 +220,23 @@
             this.label4.Location = new System.Drawing.Point(35, 437);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(155, 19);
+            this.label4.Size = new System.Drawing.Size(53, 19);
             this.label4.TabIndex = 15;
-            this.label4.Text = "All Copies On Loan";
+            this.label4.Text = "Loans";
             // 
             // dropDown_members
             // 
             this.dropDown_members.FormattingEnabled = true;
             this.dropDown_members.Location = new System.Drawing.Point(39, 337);
-            this.dropDown_members.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dropDown_members.Margin = new System.Windows.Forms.Padding(2);
             this.dropDown_members.Name = "dropDown_members";
             this.dropDown_members.Size = new System.Drawing.Size(182, 24);
             this.dropDown_members.TabIndex = 6;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label5.Location = new System.Drawing.Point(287, 437);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(150, 19);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "All Returned Loans";
-            // 
             // BTNLoan
             // 
-            this.BTNLoan.Location = new System.Drawing.Point(39, 374);
-            this.BTNLoan.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BTNLoan.Location = new System.Drawing.Point(232, 331);
+            this.BTNLoan.Margin = new System.Windows.Forms.Padding(2);
             this.BTNLoan.Name = "BTNLoan";
             this.BTNLoan.Size = new System.Drawing.Size(180, 35);
             this.BTNLoan.TabIndex = 5;
@@ -251,10 +246,10 @@
             // 
             // BTNMembers
             // 
-            this.BTNMembers.Location = new System.Drawing.Point(416, 374);
-            this.BTNMembers.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BTNMembers.Location = new System.Drawing.Point(232, 374);
+            this.BTNMembers.Margin = new System.Windows.Forms.Padding(2);
             this.BTNMembers.Name = "BTNMembers";
-            this.BTNMembers.Size = new System.Drawing.Size(125, 35);
+            this.BTNMembers.Size = new System.Drawing.Size(180, 35);
             this.BTNMembers.TabIndex = 17;
             this.BTNMembers.Text = "Members";
             this.BTNMembers.UseVisualStyleBackColor = true;
@@ -271,8 +266,8 @@
             // 
             // BTNLoansForMember
             // 
-            this.BTNLoansForMember.Location = new System.Drawing.Point(232, 374);
-            this.BTNLoansForMember.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BTNLoansForMember.Location = new System.Drawing.Point(41, 374);
+            this.BTNLoansForMember.Margin = new System.Windows.Forms.Padding(2);
             this.BTNLoansForMember.Name = "BTNLoansForMember";
             this.BTNLoansForMember.Size = new System.Drawing.Size(180, 35);
             this.BTNLoansForMember.TabIndex = 18;
@@ -282,14 +277,17 @@
             // 
             // dropDown_filterCopies
             // 
+            this.dropDown_filterCopies.BackColor = System.Drawing.SystemColors.Window;
+            this.dropDown_filterCopies.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dropDown_filterCopies.FormattingEnabled = true;
             this.dropDown_filterCopies.Items.AddRange(new object[] {
             "All Copies",
             "Available Copies"});
             this.dropDown_filterCopies.Location = new System.Drawing.Point(416, 122);
-            this.dropDown_filterCopies.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dropDown_filterCopies.Margin = new System.Windows.Forms.Padding(2);
             this.dropDown_filterCopies.Name = "dropDown_filterCopies";
             this.dropDown_filterCopies.Size = new System.Drawing.Size(125, 24);
+            this.dropDown_filterCopies.Sorted = true;
             this.dropDown_filterCopies.TabIndex = 23;
             this.dropDown_filterCopies.SelectedIndexChanged += new System.EventHandler(this.dropDown_filterCopies_SelectedIndexChanged);
             // 
@@ -309,6 +307,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(65)))), ((int)(((byte)(68)))));
+            this.panel1.Controls.Add(this.label_ShowAll);
             this.panel1.Controls.Add(this.dropDown_filterLoans);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.dropDown_filterCopies);
@@ -316,7 +315,6 @@
             this.panel1.Controls.Add(this.lbAvailableCopies);
             this.panel1.Controls.Add(this.BTNMembers);
             this.panel1.Controls.Add(this.BTNLoan);
-            this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.dropDown_members);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.lbCurrentLoans);
@@ -325,22 +323,63 @@
             this.panel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.panel1.Location = new System.Drawing.Point(622, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(583, 728);
             this.panel1.TabIndex = 24;
+            // 
+            // label_ShowAll
+            // 
+            this.label_ShowAll.AutoSize = true;
+            this.label_ShowAll.ForeColor = System.Drawing.SystemColors.Window;
+            this.label_ShowAll.Location = new System.Drawing.Point(480, 440);
+            this.label_ShowAll.Name = "label_ShowAll";
+            this.label_ShowAll.Size = new System.Drawing.Size(61, 17);
+            this.label_ShowAll.TabIndex = 25;
+            this.label_ShowAll.Text = "Show All";
+            this.label_ShowAll.Click += new System.EventHandler(this.label_ShowAll_Click);
             // 
             // dropDown_filterLoans
             // 
             this.dropDown_filterLoans.FormattingEnabled = true;
             this.dropDown_filterLoans.Items.AddRange(new object[] {
-            "All Copies",
-            "Available Copies"});
-            this.dropDown_filterLoans.Location = new System.Drawing.Point(194, 437);
+            "All Current Loans",
+            "Loans Overdue",
+            "Loans Returned"});
+            this.dropDown_filterLoans.Location = new System.Drawing.Point(407, 639);
             this.dropDown_filterLoans.Margin = new System.Windows.Forms.Padding(2);
             this.dropDown_filterLoans.Name = "dropDown_filterLoans";
-            this.dropDown_filterLoans.Size = new System.Drawing.Size(90, 24);
+            this.dropDown_filterLoans.Size = new System.Drawing.Size(134, 24);
             this.dropDown_filterLoans.TabIndex = 24;
+            this.dropDown_filterLoans.SelectedIndexChanged += new System.EventHandler(this.dropDown_filterLoans_SelectedIndexChanged);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // dropDown_filterBooks
+            // 
+            this.dropDown_filterBooks.FormattingEnabled = true;
+            this.dropDown_filterBooks.Items.AddRange(new object[] {
+            "All Books",
+            "Only Available Books"});
+            this.dropDown_filterBooks.Location = new System.Drawing.Point(469, 112);
+            this.dropDown_filterBooks.Name = "dropDown_filterBooks";
+            this.dropDown_filterBooks.Size = new System.Drawing.Size(121, 21);
+            this.dropDown_filterBooks.TabIndex = 28;
+            this.dropDown_filterBooks.SelectedIndexChanged += new System.EventHandler(this.dropDown_filterBooks_SelectedIndexChanged);
+            // 
+            // label_ShowAllBooks
+            // 
+            this.label_ShowAllBooks.AutoSize = true;
+            this.label_ShowAllBooks.ForeColor = System.Drawing.Color.Black;
+            this.label_ShowAllBooks.Location = new System.Drawing.Point(415, 115);
+            this.label_ShowAllBooks.Name = "label_ShowAllBooks";
+            this.label_ShowAllBooks.Size = new System.Drawing.Size(48, 13);
+            this.label_ShowAllBooks.TabIndex = 26;
+            this.label_ShowAllBooks.Text = "Show All";
+            this.label_ShowAllBooks.Click += new System.EventHandler(this.label_ShowAllBooks_Click);
             // 
             // LibraryForm
             // 
@@ -348,6 +387,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(237)))), ((int)(((byte)(222)))), ((int)(((byte)(194)))));
             this.ClientSize = new System.Drawing.Size(1234, 754);
+            this.Controls.Add(this.label_ShowAllBooks);
+            this.Controls.Add(this.dropDown_filterBooks);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.BTNBooksOfAuthor);
@@ -367,6 +408,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -388,7 +430,6 @@
         private System.Windows.Forms.ListBox lbCurrentLoans;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox dropDown_members;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button BTNLoan;
         private System.Windows.Forms.Button BTNMembers;
         private System.Windows.Forms.ListBox lbAvailableCopies;
@@ -397,6 +438,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox dropDown_filterLoans;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Label label_ShowAll;
+        private System.Windows.Forms.ComboBox dropDown_filterBooks;
+        private System.Windows.Forms.Label label_ShowAllBooks;
     }
 }
 

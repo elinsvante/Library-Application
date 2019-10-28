@@ -34,7 +34,7 @@ namespace Library.Models {
         /// Useful for adding the book objects directly to a ListBox.
         /// </summary>
         public override string ToString() {
-            return String.Format("[{0}] | {1} : {2} ({3})", this.BookID, this.ISBN, this.Title, this.Author.Name);
+            return String.Format("[{0}] | {1} : {2} ({3})", this.BookID, this.ISBN, this.Title, this.Author);
         }
     }
 }

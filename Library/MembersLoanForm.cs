@@ -15,17 +15,33 @@ namespace Library
 {
     public partial class MembersLoanForm : Form
     {
-        IEnumerable<Loan> loans;
+        LoanService loanService;
+        public IEnumerable<Loan> loans;
+        public Member member;
 
-        public MembersLoanForm(IEnumerable<Loan> loansForMember, string member)
+        public MembersLoanForm(IEnumerable<Loan> loansForMember, Member member)
         {
             InitializeComponent();
+            // we create only one context in our application, which gets shared among repositories
+            LibraryContext context = new LibraryContext();
+            // we use a factory object that will create the repositories as they are needed, it also makes
+            // sure all the repositories created use the same context.
+            RepositoryFactory repFactory = new RepositoryFactory(context);
+
+            this.loanService = new LoanService(repFactory);
 
             this.loans = loansForMember;
+            this.member = member;
+            ShowAllLoans(loansForMember);
 
-            tbMember.Text = member;
-            ShowAllLoans(loansForMember);        
+            loanService.Updated += ListChangedMethod;
         }
+
+        private void ListChangedMethod(object sender, EventArgs e)
+        {
+            ShowAllLoans(loans);
+        }
+
 
         private void ShowAllLoans(IEnumerable<Loan> loans)
         {
@@ -80,6 +96,14 @@ namespace Library
                     lbMemberLoan.Items.Add("No loans returned.");
                 }
             }
+        }
+
+        private void BTNReturnBook_Click(object sender, EventArgs e)
+        {
+            Loan selectedLoan = lbMemberLoan.SelectedItem as Loan;
+            loanService.ReturnBook(selectedLoan);
+            loans = loanService.AllLoanForMember(member);
+            ShowAllLoans(loans);
         }
     }
 }

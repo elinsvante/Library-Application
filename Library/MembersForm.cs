@@ -17,12 +17,8 @@ namespace Library
     {
 
         MemberService memberService;
-        LoanService loanService;
-        BookCopyService bookCopyService;
-        BookService bookService;
-        IEnumerable<Loan> loans;
 
-        public MembersForm(IEnumerable<Loan> loansForMember)
+        public MembersForm()
         {
             InitializeComponent();
 
@@ -33,14 +29,8 @@ namespace Library
             RepositoryFactory repFactory = new RepositoryFactory(context);
 
             this.memberService = new MemberService(repFactory);
-            this.loanService = new LoanService(repFactory);
-            this.bookCopyService = new BookCopyService(repFactory);
-            this.bookService = new BookService(repFactory);
 
             ShowAllMembers(memberService.All());
-            ShowAllLoans(loansForMember);
-
-            this.loans = loansForMember;
         }
 
         private void UpdateForm(object sender, FormClosingEventArgs e)
@@ -48,44 +38,20 @@ namespace Library
             ShowAllMembers(memberService.All());
         }
 
-
         private void ShowAllMembers(IEnumerable<Member> members)
         {
             lbMembers.Items.Clear();
             foreach (Member member in members)
             {
-                lbMembers.Items.Add(member);
+                lbMembers.Items.Add("[" + member.MemberID + "] -- " + member.Name + " (" + member.PersonalIdentityNumber + ") " + "Member since: " + member.MembershipDate.ToString("yyy/MM/dd"));
             }
         }
-
-        private void ShowAllLoans(IEnumerable<Loan> loans)
-        {
-            lbMembersLoan.Items.Clear();
-            foreach (Loan loan in loans)
-            {
-                lbMembersLoan.Items.Add(loan);
-            }
-        }
-
 
         private void BTNAddMember_Click(object sender, EventArgs e)
         {
             AddMemberForm newForm = new AddMemberForm();
             newForm.FormClosing += new FormClosingEventHandler(UpdateForm);
             newForm.Show();
-        }
-
-        private void BTNLoanForMember_Click(object sender, EventArgs e)
-        {
-            Member selectedMember = lbMembers.SelectedItem as Member;
-            IEnumerable<Loan> loansForMember = loanService.AllLoanForMember(selectedMember);
-
-            IEnumerable<BookCopy> allAllBookCopiesOnLoan = bookCopyService.AllBookCopiesOnLoanForMember(loansForMember);
-
-                foreach (Loan loan in loansForMember)
-                {
-                    lbMembersLoan.Items.Add(loan);
-                }
         }
     }
 }
