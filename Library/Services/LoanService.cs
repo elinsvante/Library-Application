@@ -72,6 +72,8 @@ namespace Library.Services
             return loanRepository.All().Where(l => l.TimeOfReturn != null).ToList();
         }
 
+
+
         public void Add(Loan l)
         {
             loanRepository.Add(l);

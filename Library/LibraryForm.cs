@@ -74,6 +74,7 @@ namespace Library
             lbCurrentLoans.Items.Clear();
             dropDown_filterLoans.SelectedIndex = -1;
             dropDown_filterCopies.SelectedIndex = -1;
+            lbBooks.SelectedIndex = -1;
             IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
             IEnumerable<BookCopy> bookCopiesNotOnLoan = bookCopyService.AllExcept(allCurrentLoans);
             ShowAllAvailableCopies(bookCopiesNotOnLoan);
@@ -131,18 +132,7 @@ namespace Library
             lbCurrentLoans.Items.Clear();
             foreach (Loan loan in loans)
             {
-                DateTime today = DateTime.Today;
-
-                if (loan.DueDate < today)
-                {
-                    TimeSpan elapsed = today - loan.DueDate;
-                    int daysDelayed = elapsed.Days;
-                    lbCurrentLoans.Items.Add(loan + " DELAYED! " + daysDelayed + " days.");
-                }
-                else
-                {
-                    lbCurrentLoans.Items.Add(loan);
-                }
+                lbCurrentLoans.Items.Add(loan);
             }
             if (lbCurrentLoans.Items.Count == 0)
             {
@@ -225,12 +215,37 @@ namespace Library
 
         private void lbBooks_SelectedIndexChanged(object sender, EventArgs e)
         {
+            lbAvailableCopies.Items.Clear();
             lbCopies.Items.Clear();
             Book selectedBook = lbBooks.SelectedItem as Book;
-            IEnumerable<BookCopy> bookcopy = bookCopyService.AllBookCopiesForBook(selectedBook);
-            foreach (BookCopy copy in bookcopy)
+            IEnumerable<BookCopy> bookcopies = bookCopyService.AllBookCopiesForBook(selectedBook);
+
+            IEnumerable<Loan> allLoans = loanService.AllBookCopiesOnLoan();
+            int i = 0;
+
+            foreach(BookCopy copy in bookcopies)
             {
                 lbCopies.Items.Add(copy);
+                foreach (Loan loan in allLoans)
+                {
+                    if(loan.BookCopy == copy)
+                    {
+                        i = 0;
+                        break;
+                    }
+                    else
+                    {
+                        i = 1;
+                    }
+                }
+                if (i == 1)
+                {
+                    lbAvailableCopies.Items.Add(copy);
+                } 
+            }
+            if (lbAvailableCopies.Items.Count == 0)
+            {
+                lbAvailableCopies.Items.Add("No available copies.");
             }
         }
 
@@ -259,16 +274,20 @@ namespace Library
 
         private void dropDown_filterCopies_SelectedIndexChanged(object sender, EventArgs e)
         {
-           string selectedValue = dropDown_filterCopies.SelectedItem.ToString();
-            if (selectedValue == "All Copies")
+            lbBooks.SelectedIndex = -1;
+            if (dropDown_filterCopies.SelectedItem != null)
             {
-                ShowAllBookCopies(bookCopyService.All());
-            }
-            else if(selectedValue == "Available Copies")
-            {
-                IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
-                IEnumerable<BookCopy> bookCopiesNotOnLoan = bookCopyService.AllExcept(allCurrentLoans);
-                ShowAllAvailableCopies(bookCopiesNotOnLoan);
+                string selectedValue = dropDown_filterCopies.SelectedItem.ToString();
+                if (selectedValue == "All Copies")
+                {
+                    ShowAllBookCopies(bookCopyService.All());
+                }
+                else if (selectedValue == "Available Copies")
+                {
+                    IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
+                    IEnumerable<BookCopy> bookCopiesNotOnLoan = bookCopyService.AllExcept(allCurrentLoans);
+                    ShowAllAvailableCopies(bookCopiesNotOnLoan);
+                }
             }
         }
 

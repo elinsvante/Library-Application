@@ -164,7 +164,7 @@
             this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(113)))), ((int)(((byte)(116)))));
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label6.Location = new System.Drawing.Point(1140, 2);
+            this.label6.Location = new System.Drawing.Point(1169, 2);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(23, 31);
             this.label6.TabIndex = 25;
@@ -176,7 +176,7 @@
             this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(81)))), ((int)(((byte)(113)))), ((int)(((byte)(116)))));
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label2.Location = new System.Drawing.Point(1169, 9);
+            this.label2.Location = new System.Drawing.Point(1198, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(24, 24);
             this.label2.TabIndex = 24;
