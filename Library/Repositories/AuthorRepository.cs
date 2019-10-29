@@ -6,7 +6,7 @@ using Library.Models;
 
 namespace Library.Repositories
 {
-    public class AuthorRepository
+    public class AuthorRepository : IRepository<Author, int>
     {
         LibraryContext context;
         public AuthorRepository(LibraryContext c)
@@ -22,6 +22,17 @@ namespace Library.Repositories
         {
             context.Authors.Add(a);
             context.SaveChanges();
+        }
+
+        public void Remove(Author a)
+        {
+            context.Authors.Remove(a);
+            context.SaveChanges();
+        }
+
+        public Author Find(int authorID)
+        {
+            return context.Authors.Find(authorID);
         }
 
         public void Edit(Author a)

@@ -6,7 +6,7 @@ using Library.Models;
 
 namespace Library.Repositories
 {
-    public class BookRepository
+    public class BookRepository : IRepository<Book, int>
     {
         LibraryContext context;
 
@@ -20,6 +20,23 @@ namespace Library.Repositories
             return context.Books;
         }
 
+        public void Add(Book b)
+        {
+            context.Books.Add(b);
+            context.SaveChanges();
+        }
+
+        public void Remove(Book b)
+        {
+            context.Books.Remove(b);
+            context.SaveChanges();
+        }
+
+        public Book Find(int bookID)
+        {
+            return context.Books.Find(bookID);
+        }
+
         public void Edit(Book b)
         {
             // Because the object b was retrieved through the same context, we don't need to do a lookup. 
@@ -28,12 +45,6 @@ namespace Library.Repositories
             // Then why do we still pass the Book object all the way to the repository? Because the service
             // layer doesn't know we use EF. If in the future we decide to switch EF to something else, 
             // we won't have to change the service layer.
-        }
-
-        public void Add(Book b)
-        {
-            context.Books.Add(b);
-            context.SaveChanges();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Library
         BookService bookService;
         AuthorService authorService;
         BookCopyService bookCopyService;
-        LoanService loanService;
+        public LoanService loanService;
         MemberService memberService;
 
         public LibraryForm()
@@ -53,7 +53,44 @@ namespace Library
             FillDropDownMembers(memberService.All().OrderBy(m => m.Name));
             FillDropDownAuthors(authorService.All().OrderBy(a => a.Name));
 
+            bookService.Updated += bookUpdated;
+            bookCopyService.Updated += bookCopyUpdated;
+            authorService.Updated += authorUpdated;
+            memberService.Updated += memberUpdated;
             loanService.Updated += loanUpdated;
+          
+            
+
+        }
+
+        private void bookUpdated(object sender, EventArgs e)
+        {
+            lbCopies.Items.Clear();
+            ShowAllBooks(bookService.All());
+        }
+
+        private void bookCopyUpdated(object sender, EventArgs e)
+        {
+            lbCopies.Items.Clear();
+            IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
+            IEnumerable<BookCopy> bookCopiesNotOnLoan = bookCopyService.AllExcept(allCurrentLoans);
+            ShowAllAvailableCopies(bookCopiesNotOnLoan);
+        }
+
+        private void authorUpdated(object sender, EventArgs e)
+        {
+            dropDown_authors.SelectedIndex = -1;
+            dropDown_authors.Items.Clear();
+            FillDropDownAuthors(authorService.All());
+        }
+
+        private void memberUpdated(object sender, EventArgs e)
+        {
+            lbCurrentLoans.Items.Clear();
+            ShowAllCurrentLoans(loanService.AllBookCopiesOnLoan());
+            dropDown_members.SelectedIndex = -1;
+            dropDown_members.Items.Clear();
+            FillDropDownMembers(memberService.All());
         }
 
         private void loanUpdated (object sender, EventArgs e)
@@ -69,6 +106,9 @@ namespace Library
             } 
         }
 
+
+
+
         private void ResetAfterChange()
         {
             lbCurrentLoans.Items.Clear();
@@ -83,21 +123,6 @@ namespace Library
         {
             lbCopies.Items.Clear();
             ShowAllBooks(bookService.All());   
-        }
-
-        private void UpdateBookCopy(object sender, FormClosingEventArgs e)
-        {
-            lbCopies.Items.Clear();
-            IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
-            IEnumerable<BookCopy> bookCopiesNotOnLoan = bookCopyService.AllExcept(allCurrentLoans);
-            ShowAllAvailableCopies(bookCopiesNotOnLoan);
-        }
-
-        private void UpdateAuthor(object sender, FormClosingEventArgs e)
-        {
-            dropDown_authors.SelectedIndex = -1;
-            dropDown_authors.Items.Clear();
-            FillDropDownAuthors(authorService.All());
         }
 
         private void UpdateMember(object sender, FormClosingEventArgs e)
@@ -424,30 +449,28 @@ namespace Library
 
         private void BTNAddBook_Click(object sender, EventArgs e)
         {
-            AddBookForm newForm = new AddBookForm();
-            newForm.FormClosing += new FormClosingEventHandler(UpdateBook);
+            AddBookForm newForm = new AddBookForm(bookService, authorService);
             newForm.Show();
         }
 
         private void BTNAddCopy_Click(object sender, EventArgs e)
         {
-            AddCopyForm newForm = new AddCopyForm();
-            newForm.FormClosing += new FormClosingEventHandler(UpdateBookCopy);
+            Book selectedBook = lbBooks.SelectedItem as Book;
+            string bookTitle = selectedBook.Title;
+            AddCopyForm newForm = new AddCopyForm(bookCopyService, bookService, selectedBook, bookTitle);
             newForm.Show();
         }
 
 
         private void BTNAddAuthor_Click(object sender, EventArgs e)
         {
-            AddAuthorForm newForm = new AddAuthorForm();
-            newForm.FormClosing += new FormClosingEventHandler(UpdateAuthor);
+            AddAuthorForm newForm = new AddAuthorForm(authorService);
             newForm.Show();
         }
 
         private void BTNMembers_Click(object sender, EventArgs e)
         {
-            MembersForm newForm = new MembersForm();
-            newForm.FormClosing += new FormClosingEventHandler(UpdateMember);
+            MembersForm newForm = new MembersForm(memberService);
             newForm.Show();
         }
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Library.Services
 {
-    class LoanService
+    public class LoanService : IService
     {
         /// <summary>
         /// service doesn't need a context but it needs a repository.
@@ -21,7 +21,7 @@ namespace Library.Services
         }
 
         // A generic delegate EventHandlers that represents the method that will handle an event when the event provides data.
-        public event EventHandler<EventArgs> Updated;
+        public event EventHandler Updated;
 
         //Methods that checks if there are subscribers to an event, if there is, the event is raised
         protected virtual void OnUpdated(object sender, EventArgs args)
@@ -71,7 +71,6 @@ namespace Library.Services
         {
             return loanRepository.All().Where(l => l.TimeOfReturn != null).ToList();
         }
-
 
 
         public void Add(Loan l)

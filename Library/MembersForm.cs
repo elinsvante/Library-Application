@@ -17,23 +17,18 @@ namespace Library
     {
 
         MemberService memberService;
-
-        public MembersForm()
+        public MembersForm(MemberService memberService)
         {
             InitializeComponent();
 
-            // we create only one context in our application, which gets shared among repositories
-            LibraryContext context = new LibraryContext();
-            // we use a factory object that will create the repositories as they are needed, it also makes
-            // sure all the repositories created use the same context.
-            RepositoryFactory repFactory = new RepositoryFactory(context);
-
-            this.memberService = new MemberService(repFactory);
+            this.memberService = memberService;
 
             ShowAllMembers(memberService.All());
+
+            memberService.Updated += memberUpdate;
         }
 
-        private void UpdateForm(object sender, FormClosingEventArgs e)
+        private void memberUpdate(object sender, EventArgs e)
         {
             ShowAllMembers(memberService.All());
         }
@@ -49,8 +44,7 @@ namespace Library
 
         private void BTNAddMember_Click(object sender, EventArgs e)
         {
-            AddMemberForm newForm = new AddMemberForm();
-            newForm.FormClosing += new FormClosingEventHandler(UpdateForm);
+            AddMemberForm newForm = new AddMemberForm(memberService);
             newForm.Show();
         }
     }

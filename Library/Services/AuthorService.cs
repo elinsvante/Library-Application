@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Library.Services
 {
-    class AuthorService
+    public class AuthorService : IService
     {
         /// <summary>
         /// service doesn't need a context but it needs a repository.
@@ -21,6 +21,15 @@ namespace Library.Services
             this.authorRepository = rFactory.CreateAuthorRepository();
         }
 
+        // A generic delegate EventHandlers that represents the method that will handle an event when the event provides data.
+        public event EventHandler Updated;
+
+        //Methods that checks if there are subscribers to an event, if there is, the event is raised
+        protected virtual void OnUpdated(object sender, EventArgs args)
+        {
+            Updated?.Invoke(this, args);
+        }
+
         public IEnumerable<Author> All()
         {
             return authorRepository.All();
@@ -29,6 +38,7 @@ namespace Library.Services
         public void Add(Author a)
         {
             authorRepository.Add(a);
+            OnUpdated(this, EventArgs.Empty);
         }
 
         public IEnumerable<Book> BooksByAuthor(Author a)

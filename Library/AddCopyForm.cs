@@ -15,37 +15,22 @@ namespace Library
 {
     public partial class AddCopyForm : Form
     {
-
-        BookService bookService;
         BookCopyService bookCopyService;
+        BookService bookService;
+        Book book;
 
-        public AddCopyForm()
+        public AddCopyForm(BookCopyService bookCopyService, BookService bookService, Book book, string bookString)
         {
             InitializeComponent();
 
-            // we create only one context in our application, which gets shared among repositories
-            LibraryContext context = new LibraryContext();
-            // we use a factory object that will create the repositories as they are needed, it also makes
-            // sure all the repositories created use the same context.
-            RepositoryFactory repFactory = new RepositoryFactory(context);
-
-            this.bookService = new BookService(repFactory);
-            this.bookCopyService = new BookCopyService(repFactory);
-
-            FillDropDownBooks(bookService.All().OrderBy(b => b.Title));
-        }
-
-        private void FillDropDownBooks(IEnumerable<Book> allBooks)
-        {
-            foreach (Book book in allBooks)
-            {
-                dropDown_books.Items.Add(book.Title);
-            }
+            this.bookCopyService = bookCopyService;
+            this.bookService = bookService;
+            this.book = book;
+            tbBook.Text = bookString;
         }
 
         private void BTNAddCopy_Click(object sender, EventArgs e)
         {
-            Book book = dropDown_books.SelectedItem as Book;
             int condition = Convert.ToInt32(dropDown_condition.SelectedItem);
             BookCopy newCopy = new BookCopy(book, condition);
             bookCopyService.Add(newCopy);

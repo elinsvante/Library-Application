@@ -15,31 +15,26 @@ namespace Library
 {
     public partial class MembersLoanForm : Form
     {
-        LoanService loanService;
-        public IEnumerable<Loan> loans;
+       
         public Member member;
+        LoanService loanService;
 
-        public MembersLoanForm(IEnumerable<Loan> loansForMember, Member member)
+        public MembersLoanForm(Member member, LoanService loanService)
         {
             InitializeComponent();
-            // we create only one context in our application, which gets shared among repositories
-            LibraryContext context = new LibraryContext();
-            // we use a factory object that will create the repositories as they are needed, it also makes
-            // sure all the repositories created use the same context.
-            RepositoryFactory repFactory = new RepositoryFactory(context);
 
-            this.loanService = new LoanService(repFactory);
+            this.loanService = loanService;
 
-            this.loans = loansForMember;
             this.member = member;
-            ShowAllLoans(loansForMember);
+            ShowAllLoans(loanService.AllLoanForMember(member));
 
             loanService.Updated += ListChangedMethod;
         }
 
         private void ListChangedMethod(object sender, EventArgs e)
         {
-            ShowAllLoans(loans);
+            lbMemberLoan.Items.Clear();
+            ShowAllLoans(loanService.AllLoanForMember(member));
         }
 
 
@@ -50,7 +45,7 @@ namespace Library
             {
                 if(loan.TimeOfReturn != null)
                 {
-                    lbMemberLoan.Items.Add(loan + " (RETURNED)");                 
+                    lbMemberLoan.Items.Add(loan);                 
                 }
                 else
                 {
@@ -63,17 +58,17 @@ namespace Library
         {
             if (dropDown_filterLoans.SelectedItem.ToString() == "All Loans")
             {
-                ShowAllLoans(loans);
+                ShowAllLoans(loanService.AllLoanForMember(member));
             }
             else if (dropDown_filterLoans.SelectedItem.ToString() == "Loans Overdue")
             {
                 lbMemberLoan.Items.Clear();
-                foreach (Loan loan in loans)
+                foreach (Loan loan in loanService.AllBookCopiesOverdueForMember(member))
                 {
                     DateTime timeNow = DateTime.Today;
                     if(loan.DueDate < timeNow )
                     {
-                        lbMemberLoan.Items.Add(loan + " Due: " + loan.DueDate);
+                        lbMemberLoan.Items.Add(loan);
                     }
                     else
                     {
@@ -84,11 +79,11 @@ namespace Library
             else if (dropDown_filterLoans.SelectedItem.ToString() == "Loans Returned")
             {
                 lbMemberLoan.Items.Clear();
-                foreach (Loan loan in loans)
+                foreach (Loan loan in loanService.AllReturnedLoanForMember(member))
                 {
                     if (loan.TimeOfReturn != null)
                     {
-                        lbMemberLoan.Items.Add(loan + " Returned: (" + loan.TimeOfReturn + ")");
+                        lbMemberLoan.Items.Add(loan);
                     }
                 }
                 if (lbMemberLoan.Items.Count == 0)
@@ -102,8 +97,6 @@ namespace Library
         {
             Loan selectedLoan = lbMemberLoan.SelectedItem as Loan;
             loanService.ReturnBook(selectedLoan);
-            loans = loanService.AllLoanForMember(member);
-            ShowAllLoans(loans);
         }
     }
 }

@@ -17,16 +17,11 @@ namespace Library
     public partial class AddMemberForm : Form
     {
         MemberService memberService;
-        public AddMemberForm()
+        public AddMemberForm(MemberService memberService)
         {
             InitializeComponent();
-            // we create only one context in our application, which gets shared among repositories
-            LibraryContext context = new LibraryContext();
-            // we use a factory object that will create the repositories as they are needed, it also makes
-            // sure all the repositories created use the same context.
-            RepositoryFactory repFactory = new RepositoryFactory(context);
 
-            this.memberService = new MemberService(repFactory);
+            this.memberService = memberService;
         }
 
         private void BTNAddMember_Click(object sender, EventArgs e)

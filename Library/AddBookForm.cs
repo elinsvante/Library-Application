@@ -15,22 +15,15 @@ namespace Library
 {
     public partial class AddBookForm : Form
     {
-
-        AuthorService authorService;
         BookService bookService;
+        AuthorService authorService;
 
-        public AddBookForm()
+        public AddBookForm(BookService bookService, AuthorService authorService)
         {
             InitializeComponent();
 
-            // we create only one context in our application, which gets shared among repositories
-            LibraryContext context = new LibraryContext();
-            // we use a factory object that will create the repositories as they are needed, it also makes
-            // sure all the repositories created use the same context.
-            RepositoryFactory repFactory = new RepositoryFactory(context);
-
-            this.authorService = new AuthorService(repFactory);
-            this.bookService = new BookService(repFactory);
+            this.bookService = bookService;
+            this.authorService = authorService;
 
             FillDropDownAuthors(authorService.All());
         }
@@ -62,8 +55,8 @@ namespace Library
                 string title = tbTitle.Text;
                 Author author = dropDown_authors.SelectedItem as Author;
                 string isbn = tbISBN.Text;
-
                 string description = tbDescription.Text;
+
                 Book newBook = new Book(title, isbn, description, author);
                 bookService.Add(newBook);
                 this.Close();

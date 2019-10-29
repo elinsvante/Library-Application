@@ -16,17 +16,11 @@ namespace Library
     {
         AuthorService authorService;
 
-        public AddAuthorForm()
+        public AddAuthorForm(AuthorService authorService)
         {
             InitializeComponent();
 
-            // we create only one context in our application, which gets shared among repositories
-            LibraryContext context = new LibraryContext();
-            // we use a factory object that will create the repositories as they are needed, it also makes
-            // sure all the repositories created use the same context.
-            RepositoryFactory repFactory = new RepositoryFactory(context);
-
-            this.authorService = new AuthorService(repFactory);
+            this.authorService = authorService;
         }
 
         private void BTNAddAuthor_Click(object sender, EventArgs e)

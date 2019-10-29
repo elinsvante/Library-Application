@@ -28,25 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dropDown_books = new System.Windows.Forms.ComboBox();
+            this.components = new System.ComponentModel.Container();
             this.dropDown_condition = new System.Windows.Forms.ComboBox();
             this.BTNAddCopy = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.tbBook = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // dropDown_books
-            // 
-            this.dropDown_books.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dropDown_books.FormattingEnabled = true;
-            this.dropDown_books.Location = new System.Drawing.Point(100, 128);
-            this.dropDown_books.Margin = new System.Windows.Forms.Padding(2);
-            this.dropDown_books.Name = "dropDown_books";
-            this.dropDown_books.Size = new System.Drawing.Size(197, 24);
-            this.dropDown_books.TabIndex = 0;
             // 
             // dropDown_condition
             // 
@@ -122,18 +114,32 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "Condition:";
             // 
+            // tbBook
+            // 
+            this.tbBook.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbBook.Location = new System.Drawing.Point(100, 128);
+            this.tbBook.Name = "tbBook";
+            this.tbBook.ReadOnly = true;
+            this.tbBook.Size = new System.Drawing.Size(197, 22);
+            this.tbBook.TabIndex = 1;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
             // AddCopyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(237)))), ((int)(((byte)(222)))), ((int)(((byte)(194)))));
             this.ClientSize = new System.Drawing.Size(394, 302);
+            this.Controls.Add(this.tbBook);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.BTNAddCopy);
             this.Controls.Add(this.dropDown_condition);
-            this.Controls.Add(this.dropDown_books);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "AddCopyForm";
             this.Text = "AddCopyForm";
@@ -145,13 +151,13 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox dropDown_books;
         private System.Windows.Forms.ComboBox dropDown_condition;
         private System.Windows.Forms.Button BTNAddCopy;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tbBook;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
