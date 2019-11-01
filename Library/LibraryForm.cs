@@ -12,11 +12,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
-/// <summary>
-/// Show books available and not available (which book has book copies available?)
-/// Notifera medlemmen att lånet är 15 dagar?
-/// </summary>
-
 namespace Library
 {
     public partial class LibraryForm : Form
@@ -25,16 +20,17 @@ namespace Library
         BookService bookService;
         AuthorService authorService;
         BookCopyService bookCopyService;
-        public LoanService loanService;
+        LoanService loanService;
         MemberService memberService;
 
         public LibraryForm()
         {
             InitializeComponent();
 
-            // we create only one context in our application, which gets shared among repositories
+            // We create only one context in our application, which gets shared among repositories
             LibraryContext context = new LibraryContext();
-            // we use a factory object that will create the repositories as they are needed, it also makes
+
+            // We use a factory object that will create the repositories as they are needed, it also makes
             // sure all the repositories created use the same context.
             RepositoryFactory repFactory = new RepositoryFactory(context);
 
@@ -44,23 +40,22 @@ namespace Library
             this.loanService = new LoanService(repFactory);
             this.memberService = new MemberService(repFactory);
 
+            //Set all starting values.
             ShowAllBooks(bookService.All());
-            ShowAllBookCopies(bookCopyService.All());
-            ShowAllCurrentLoans(loanService.AllBookCopiesOnLoan());
+            ShowAllBookCopies(bookCopyService.All());     
             IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
+            ShowAllCurrentLoans(allCurrentLoans);
             IEnumerable<BookCopy> bookCopiesNotOnLoan = bookCopyService.AllExcept(allCurrentLoans);
             ShowAllAvailableCopies(bookCopiesNotOnLoan);
             FillDropDownMembers(memberService.All().OrderBy(m => m.Name));
             FillDropDownAuthors(authorService.All().OrderBy(a => a.Name));
 
+            //Subscribe to the Updated() event in each service to update the GUI when changes in the database has been made.
             bookService.Updated += bookUpdated;
             bookCopyService.Updated += bookCopyUpdated;
             authorService.Updated += authorUpdated;
             memberService.Updated += memberUpdated;
             loanService.Updated += loanUpdated;
-          
-            
-
         }
 
         private void bookUpdated(object sender, EventArgs e)
@@ -106,33 +101,16 @@ namespace Library
             } 
         }
 
-
-
-
         private void ResetAfterChange()
         {
             lbCurrentLoans.Items.Clear();
             dropDown_filterLoans.SelectedIndex = -1;
-            dropDown_filterCopies.SelectedIndex = -1;
             lbBooks.SelectedIndex = -1;
             IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
             IEnumerable<BookCopy> bookCopiesNotOnLoan = bookCopyService.AllExcept(allCurrentLoans);
             ShowAllAvailableCopies(bookCopiesNotOnLoan);
         }
-        private void UpdateBook(object sender, FormClosingEventArgs e)
-        {
-            lbCopies.Items.Clear();
-            ShowAllBooks(bookService.All());   
-        }
 
-        private void UpdateMember(object sender, FormClosingEventArgs e)
-        {
-            lbCurrentLoans.Items.Clear();
-            ShowAllCurrentLoans(loanService.AllBookCopiesOnLoan());
-            dropDown_members.SelectedIndex = -1;
-            dropDown_members.Items.Clear();
-            FillDropDownMembers(memberService.All());
-        }
 
         private void ShowAllBooks(IEnumerable<Book> books)
         {
@@ -196,8 +174,7 @@ namespace Library
                 }
             }
         }
-
-        
+    
         private void ShowAllAvailableCopies(IEnumerable<BookCopy> bookCopiesNotOnLoan)
         {
             lbAvailableCopies.Items.Clear();
@@ -211,13 +188,11 @@ namespace Library
             }
         }
 
-        private void ShowAllAvailableCopiesForBook(IEnumerable<BookCopy> bookCopiesNotOnLoan)
+        private void ShowAllBookCopiesForBook(IEnumerable<BookCopy> allBookCopies)
         {
-            lbAvailableCopies.Items.Clear();
             lbCopies.Items.Clear();
-            foreach (BookCopy bookCopy in bookCopiesNotOnLoan)
+            foreach (BookCopy bookCopy in allBookCopies)
             {
-                lbAvailableCopies.Items.Add(bookCopy);
                 lbCopies.Items.Add(bookCopy);
             }
         }
@@ -243,77 +218,12 @@ namespace Library
             lbAvailableCopies.Items.Clear();
             lbCopies.Items.Clear();
             Book selectedBook = lbBooks.SelectedItem as Book;
-            IEnumerable<BookCopy> bookcopies = bookCopyService.AllBookCopiesForBook(selectedBook);
 
             IEnumerable<Loan> allLoans = loanService.AllBookCopiesOnLoan();
-            int i = 0;
+            IEnumerable<BookCopy> bookCopies = bookCopyService.AllExceptWithBook(allLoans, selectedBook);
 
-            foreach(BookCopy copy in bookcopies)
-            {
-                lbCopies.Items.Add(copy);
-                foreach (Loan loan in allLoans)
-                {
-                    if(loan.BookCopy == copy)
-                    {
-                        i = 0;
-                        break;
-                    }
-                    else
-                    {
-                        i = 1;
-                    }
-                }
-                if (i == 1)
-                {
-                    lbAvailableCopies.Items.Add(copy);
-                } 
-            }
-            if (lbAvailableCopies.Items.Count == 0)
-            {
-                lbAvailableCopies.Items.Add("No available copies.");
-            }
-        }
-
-        private void label_ShowAllBooks_Click(object sender, EventArgs e)
-        {
-            ShowAllBooks(bookService.All());
-        }
-
-        private void dropDown_filterBooks_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string selectedValue = dropDown_filterBooks.SelectedItem.ToString();
-            if(selectedValue == "All Books")
-            {
-                ShowAllBooks(bookService.All());
-            }
-            else if (selectedValue == "Only Available Books")
-            {
-                IEnumerable<Loan> copiesNotOnLoan = loanService.AllBookCopiesNotOnLoan();
-                foreach(Loan loan in copiesNotOnLoan)
-                {
-                    lbBooks.Items.Add(loan.BookCopy.Book);
-                }
-            }
-        }
-
-
-        private void dropDown_filterCopies_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            lbBooks.SelectedIndex = -1;
-            if (dropDown_filterCopies.SelectedItem != null)
-            {
-                string selectedValue = dropDown_filterCopies.SelectedItem.ToString();
-                if (selectedValue == "All Copies")
-                {
-                    ShowAllBookCopies(bookCopyService.All());
-                }
-                else if (selectedValue == "Available Copies")
-                {
-                    IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
-                    IEnumerable<BookCopy> bookCopiesNotOnLoan = bookCopyService.AllExcept(allCurrentLoans);
-                    ShowAllAvailableCopies(bookCopiesNotOnLoan);
-                }
-            }
+            ShowAllAvailableCopies(bookCopies);
+            ShowAllBookCopiesForBook(bookCopyService.AllCopiesForBook(selectedBook));
         }
 
         private void dropDown_filterLoans_SelectedIndexChanged(object sender, EventArgs e)
@@ -349,17 +259,16 @@ namespace Library
                     }
                     else if (selectedValue == "Loans Returned")
                     {
-                        ShowAllReturnedLoans(loanService.AllBookCopiesNotOnLoan());
+                        ShowAllReturnedLoans(loanService.AllReturnedLoan());
                     }
                 }
             }         
         }
             
-
         private void BTNBooksOfAuthor_Click(object sender, EventArgs e)
         {
             Author selectedAuthor = dropDown_authors.SelectedItem as Author;
-            IEnumerable<Book> booksByAuthor = authorService.BooksByAuthor(selectedAuthor);
+            IEnumerable<Book> booksByAuthor = authorService.BooksByAuthor(selectedAuthor);   
             if (booksByAuthor == null || !booksByAuthor.Any())
             {
                 lbBooks.Items.Clear();
@@ -367,7 +276,9 @@ namespace Library
             }
             else
             {
-               ShowAllBooks(booksByAuthor);
+                lbBooks.SelectedIndex = -1;
+                lbCopies.Items.Clear();
+                ShowAllBooks(booksByAuthor);   
             }
         }
 
@@ -386,31 +297,24 @@ namespace Library
             }
             else
             {
-                if (dropDown_filterCopies.SelectedItem != null)
-                {
-                    string selectedValue = dropDown_filterCopies.SelectedItem.ToString();
-                    if (selectedValue == "All Copies")
-                    {
-                        MessageBox.Show("Please choose a copy from the Available Copies. ");
-                    }
-                    else if (selectedValue == "Available Copies")
-                    {
-                        MakeLoan(selectedBookCopy, selectedMember);
-                    }
-                }
-                else
-                {
-                    MakeLoan(selectedBookCopy, selectedMember);
-                }
+                Loan(selectedBookCopy, selectedMember);
             }
         }  
 
-        private void MakeLoan(BookCopy bookCopy, Member member) 
+        private void Loan(BookCopy bookCopy, Member member) 
         {
             DateTime timeOfLoan = DateTime.Now;
             DateTime dueDate = timeOfLoan.AddDays(15);
             Loan newLoan = new Loan(timeOfLoan, dueDate, bookCopy, member);
             loanService.Add(newLoan);
+        }
+
+        private void labelShowAllAvailableCopies_Click(object sender, EventArgs e)
+        {
+            lbBooks.SelectedIndex = -1;
+            IEnumerable<Loan> allCurrentLoans = loanService.AllBookCopiesOnLoan();
+            IEnumerable<BookCopy> bookCopiesNotOnLoan = bookCopyService.AllExcept(allCurrentLoans);
+            ShowAllAvailableCopies(bookCopiesNotOnLoan);
         }
 
         private void label_ShowAll_Click(object sender, EventArgs e)
@@ -460,7 +364,6 @@ namespace Library
             AddCopyForm newForm = new AddCopyForm(bookCopyService, bookService, selectedBook, bookTitle);
             newForm.Show();
         }
-
 
         private void BTNAddAuthor_Click(object sender, EventArgs e)
         {

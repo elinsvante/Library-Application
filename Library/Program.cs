@@ -12,7 +12,7 @@ namespace Library {
         [STAThread]
         static void Main() {
 
-            // Set the DataDirectory (used in the connection-string) to be the executing app directory
+            //Set the DataDirectory (used in the connection-string) to be the executing app directory
             AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Directory.GetCurrentDirectory());
 
             Application.EnableVisualStyles();

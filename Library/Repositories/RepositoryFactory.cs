@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Library.Repositories
 {
+    /// <summary>
+    /// This class handles instantiation of the repositories.
+    /// </summary>
     public class RepositoryFactory
     {
         private LibraryContext context;
@@ -17,25 +20,46 @@ namespace Library.Repositories
             this.context = c;
         }
 
+        /// <summary>
+        /// Retrieve a Book repository instance.
+        /// </summary>
+        /// <returns></returns>
         public BookRepository CreateBookRepository()
         {
             return new BookRepository(context);
         }
 
+        /// <summary>
+        /// Retrieve a BookCopy repository instance.
+        /// </summary>
+        /// <returns></returns>
         public BookCopyRepository CreateBookCopyRepository()
         {
             return new BookCopyRepository(context);
         }
 
+        /// <summary>
+        /// Retrieve an Author repository instance.
+        /// </summary>
+        /// <returns></returns>
         public AuthorRepository CreateAuthorRepository()
         {
             return new AuthorRepository(context);
         }
 
+        /// <summary>
+        /// Retrieve a Loan repository instance.
+        /// </summary>
+        /// <returns></returns>
         public LoanRepository CreateLoanRepository()
         {
             return new LoanRepository(context);
         }
+
+        /// <summary>
+        /// Retrieve a Member repository instance.
+        /// </summary>
+        /// <returns></returns>
         public MemberRepository CreateMemberRepository()
         {
             return new MemberRepository(context);

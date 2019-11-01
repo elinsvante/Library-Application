@@ -7,33 +7,47 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 namespace Library.Models {
+
     /// <summary>
     /// Derived context.
     /// </summary>
     public class LibraryContext : DbContext {
-        // Your context has been configured to use a 'LibraryContext' connection string from your application's 
+
+        /// <summary>
+        /// Context is configured to use a 'LibraryContext' connection string from the application's 
         // configuration file (App.config or Web.config). By default, this connection string targets the 
-        // 'Library.Models.LibraryContext' database on your LocalDb instance. 
-        // 
-        // If you wish to target a different database and/or database provider, modify the 'LibraryContext' 
-        // connection string in the application configuration file.
+        // 'Library.Models.LibraryContext' database on the LocalDb instance.
+        /// </summary>
         public LibraryContext(){
             // Database strategy
             Database.SetInitializer<LibraryContext>(new LibraryDbInit());
         }
 
-        // Add a DbSet for each entity type that you want to include in your model. For more information 
-        // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
-
+        /// <summary>
+        /// A DBSet for the entity type Books.
+        /// </summary>
         public DbSet<Book> Books { get; set; }
+
+        /// <summary>
+        /// A DBSet for the entity type Authors.
+        /// </summary>
         public DbSet<Author> Authors { get; set; }
+
+        /// <summary>
+        /// A DBSet for the entity type BookCopies.
+        /// </summary>
         public DbSet<BookCopy> BookCopies { get; set; }
+
+        /// <summary>
+        /// A DBSet for the entity type Loans.
+        /// </summary>
         public DbSet<Loan> Loans { get; set; }
+
+        /// <summary>
+        /// A DBSet for the entity type Members.
+        /// </summary>
         public DbSet<Member> Members { get; set; }
 
-
-        // If you want to try or need to (some use cases) use fluent API this is the place!
-        // Reference: http://blogs.msdn.com/b/adonet/archive/2010/12/14/ef-feature-ctp5-fluent-api-samples.aspx
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
         }

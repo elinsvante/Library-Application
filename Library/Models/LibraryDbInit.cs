@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Library.Models {
     /// <summary>
     /// Database strategy is chosen as the base class to LibraryDbInit.
-    /// Here in the Seed method you can create the default objects you want in the database.
+    /// Here in the Seed method it's possible to create the default objects you want in the database.
     /// </summary>
     class LibraryDbInit : DropCreateDatabaseAlways<LibraryContext> {
         protected override void Seed(LibraryContext context) {
@@ -16,7 +16,7 @@ namespace Library.Models {
 
             Author author1 = new Author()
             {
-                Name = "Elin Svantesson",
+                Name = "Kristina Ohlsson",
             };
 
             context.Authors.Add(author1);
@@ -24,56 +24,49 @@ namespace Library.Models {
 
             Author author2 = new Author()
             {
-                Name = "Katarina Bylöw",
+                Name = "Jonas Moström",
             };
 
             context.Authors.Add(author2);
             context.SaveChanges();
 
-            Book monteCristo = new Book() {
-                Title = "The Count of Monte Cristo",
-                ISBN = "92872819",
+            Book book1 = new Book() {
+                Title = "Henrys Hemlighet",
+                ISBN = "9789164206138",
                 Author = author1,
             };
 
             // Add the book to the DbSet of books.
-            context.Books.Add(monteCristo);
+            context.Books.Add(book1);
             // Persist changes to the database
             context.SaveChanges();
 
-            Book csharp = new Book()
+            Book book2 = new Book()
             {
-                Title = "C# Essentials",
-                ISBN = "928738919",
+                Title = "Varulvens Hemlighet",
+                ISBN = "9789188279477",
                 Author = author1,
             };
 
-            context.Books.Add(csharp);
+            context.Books.Add(book2);
             context.SaveChanges();
 
             BookCopy bookcopy1 = new BookCopy()
             {
                 Condition = 1,
-                Book = monteCristo
+                Book = book1
             };
 
             BookCopy bookcopy2 = new BookCopy()
             {
                 Condition = 10,
-                Book = monteCristo
+                Book = book1
             };
 
             BookCopy bookcopy3 = new BookCopy()
             {
                 Condition = 8,
-                Book = monteCristo
-            };
-
-
-            BookCopy bookcopy4 = new BookCopy()
-            {
-                Condition = 8,
-                Book = csharp
+                Book = book2
             };
 
 
@@ -83,13 +76,11 @@ namespace Library.Models {
             context.SaveChanges();
             context.BookCopies.Add(bookcopy3);
             context.SaveChanges();
-            context.BookCopies.Add(bookcopy4);
-            context.SaveChanges();
 
             Member member1 = new Member()
             {
-                Name = "Diyar Faraj",
-                PersonalIdentityNumber = "8912268877",
+                Name = "Elin Svantesson",
+                PersonalIdentityNumber = "9602253743",
                 MembershipDate = DateTime.Now.AddDays(-12).Date
             };
 
@@ -121,13 +112,12 @@ namespace Library.Models {
             {
                 TimeOfLoan = DateTime.Today.AddDays(-16),
                 DueDate = DateTime.Today.AddDays(-1),
-                BookCopy = bookcopy2,
+                BookCopy = bookcopy3,
                 Member = member2
             };
 
             context.Loans.Add(loan2);
             context.SaveChanges();
-
         }
     }
 }
